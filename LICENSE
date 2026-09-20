@@ -1,21 +1,75 @@
-The MIT License (MIT)
+MOZZY USE LICENSE
+Copyright (c) 2026 Piotr Borowski
 
-Copyright (c) 2015-present 650 Industries, Inc. (aka Expo)
+This license ("License") governs the use of the Pulse application and its
+source code ("Software") made available in this repository. Downloading,
+installing, or running the Software constitutes acceptance of the terms
+below.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. DEFINITIONS
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+"Licensor" means the owner of the copyright in the Software, as identified
+above.
+
+"Licensee" means any person or entity that downloads, installs, or in any
+way uses the Software.
+
+"Software" means the source code, binaries, graphical assets, documentation,
+and any other materials contained in this repository.
+
+2. GRANT OF LICENSE
+
+Subject to compliance with the terms of this License, the Licensor grants
+the Licensee a non-exclusive, non-transferable, revocable license to:
+
+  a) download and install the Software,
+  b) run and use the Software for its intended purpose, in the form in
+     which it is provided.
+
+3. RESTRICTIONS
+
+The Licensee MAY NOT, whether directly or through a third party:
+
+  a) modify, adapt, translate, or create derivative works based on the
+     Software or its source code,
+  b) decompile, disassemble, reverse engineer, or attempt to derive the
+     source code from any binary form of the Software,
+  c) remove, obscure, or alter any copyright notices, trademarks, or other
+     proprietary markings contained in the Software,
+  d) distribute, sublicense, sell, rent, or otherwise make the Software
+     (whether modified or unmodified) available to any third party without
+     the Licensor's prior written consent,
+  e) use the Software in any manner inconsistent with its intended purpose
+     or in violation of applicable law.
+
+4. OWNERSHIP
+
+The Software is owned by the Licensor and is protected by copyright law.
+This License does not transfer any intellectual property rights to the
+Licensee — it grants only a limited right to use the Software under the
+terms set out above.
+
+5. NO WARRANTY
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+6. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE LICENSOR SHALL NOT BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR INABILITY TO USE THE SOFTWARE.
+
+7. TERMINATION
+
+This License terminates automatically if the Licensee breaches any of its
+terms. Upon termination, the Licensee must immediately stop using the
+Software and delete all copies in their possession.
+
+8. GENERAL
+
+This License constitutes the entire agreement between the parties regarding
+use of the Software. This License is governed by the laws of
+[COUNTRY — e.g., Poland], and any disputes shall be resolved by the courts
+having jurisdiction over the Licensor's place of business.
