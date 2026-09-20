@@ -1,6 +1,6 @@
 # Mozzy
 
-*Mozzy is an app for personal trainers that brings session scheduling, client records (weight, height, progress), and messaging into one place.*
+Mozzy is an app for personal trainers that brings session scheduling, client records (weight, height, progress), and messaging into one place.
 
 ## Features
 
