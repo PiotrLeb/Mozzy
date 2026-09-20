@@ -1,56 +1,218 @@
-# Welcome to your Expo app 👋
+# Standardy kodu (TypeScript)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Zasady, które obowiązują w tym repozytorium. Cel: kod czytelny, spójny i łatwy w utrzymaniu przez każdą osobę z zespołu.
 
-## Get started
+> **Zasada nadrzędna:** kod czyta się znacznie częściej, niż się go pisze. Pisz tak, żeby zrozumiał go ktoś, kto nie zna kontekstu.
 
-1. Install dependencies
+## Spis treści
 
-   ```bash
-   npm install
-   ```
+1. [Nazewnictwo](#1-nazewnictwo)
+2. [Komentarze](#2-komentarze)
+3. [Struktura projektu](#3-struktura-projektu)
+4. [Zasady pisania kodu](#4-zasady-pisania-kodu)
+5. [Narzędzia i automatyzacja](#5-narzędzia-i-automatyzacja)
+6. [Git i code review](#6-git-i-code-review)
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 1. Nazewnictwo
 
-In the output, you'll find options to open the app in a
+### 1.1 Zasady ogólne
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Nazwy piszemy **po angielsku**, konsekwentnie w całym projekcie.
+- Nazwa opisuje **co to jest** lub **co robi**, nie jak to działa.
+- Unikamy nieczytelnych skrótów. Dozwolone są powszechnie znane: `id`, `url`, `api`, `i` w prostej pętli.
+- Zakazane nazwy-wytrychy: `data`, `info`, `temp`, `stuff`, `handle`, `process`, `manager`, `helper`, `misc`.
+- Nazwa powinna być wymawialna i możliwa do wyszukania w kodzie.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 1.2 Konwencje wielkości liter
 
-## Get a fresh project
+| Element | Konwencja |
+|---------|-----------|
+| Zmienne, parametry | `camelCase` |
+| Funkcje, metody | `camelCase` (czasownik) |
+| Klasy | `PascalCase` (rzeczownik) |
+| Interfejsy | `PascalCase`, **bez** prefiksu `I` |
+| Typy (`type`) | `PascalCase` |
+| Enumy i ich wartości | `PascalCase` |
+| Parametry generyczne | `T` lub opisowa nazwa z prefiksem `T` |
+| Stałe (na poziomie modułu) | `UPPER_SNAKE_CASE` |
+| Komponenty React | `PascalCase` |
+| Hooki React | `camelCase` z prefiksem `use` |
+| Pliki (ogólne) | `kebab-case` |
+| Pliki komponentów React | `PascalCase` |
+| Foldery | `kebab-case` |
 
-When you're ready, run:
+### 1.3 Reguły szczegółowe
 
-```bash
-npm run reset-project
+- **Zmienne boolowskie** zaczynamy od `is`, `has`, `can`, `should`.
+- **Funkcje** to czasowniki opisujące akcję.
+- **Kolekcje** nazywamy w liczbie mnogiej, bez dopisków `List`/`Array`.
+- **Stałe** zamiast magic numbers i magic stringów.
+- **Prefiksy i sufiksy** typu `I` w interfejsach czy `Type`/`Enum` w nazwach są zbędne.
+- **Handlery zdarzeń:** `handleXxx` dla funkcji obsługujących, `onXxx` dla propsów.
+
+### 1.4 Typy i `any`
+
+- **Zakaz `any`.** Jeśli typ jest naprawdę nieznany, użyj `unknown` i zawęź go.
+- Tryb `strict` w `tsconfig.json` jest obowiązkowy.
+- Funkcje publiczne i eksportowane mają jawnie opisane typy zwracane.
+- `interface` dla kształtu obiektów i kontraktów, `type` dla unii, przecięć i aliasów.
+- Unikamy asercji typów (`as`), chyba że mamy pewność i wyjaśniamy to komentarzem.
+
+---
+
+## 2. Komentarze
+
+### 2.1 Filozofia
+
+Dobry kod tłumaczy **co** robi sam, przez nazwy i strukturę. Komentarz służy do wyjaśnienia **dlaczego**. Jeśli musisz komentować **co** robi fragment kodu, najpierw popraw nazwy lub wydziel funkcję.
+
+### 2.2 Kiedy komentować
+
+- Nieoczywista decyzja biznesowa lub techniczna (dlaczego tak, a nie inaczej).
+- Obejścia (workaroundy) błędów bibliotek lub API, z linkiem do issue.
+- Skomplikowane algorytmy lub wyrażenia regularne.
+- Ostrzeżenia o skutkach ubocznych lub ograniczeniach.
+
+### 2.3 Kiedy NIE komentować
+
+- Gdy komentarz powtarza to, co widać w kodzie.
+- Zamiast usunąć martwy kod. **Zakomentowany kod usuwamy**, historia jest w gitcie.
+- Do prowadzenia dziennika zmian w pliku (od tego jest `git log`).
+
+### 2.4 JSDoc / TSDoc
+
+- Stosujemy dla **publicznych API, bibliotek i eksportowanych funkcji**.
+- Typów nie powtarzamy w opisie, bo TypeScript już je zna.
+- Opisujemy: co robi funkcja, parametry (`@param`), wynik (`@returns`), rzucane błędy (`@throws`).
+
+### 2.5 TODO / FIXME
+
+- Zawsze z autorem i kontekstem (numer ticketu lub powód), w formacie `TODO(autor): opis, ticket #123`.
+- TODO bez kontekstu nie przechodzi code review.
+
+---
+
+## 3. Struktura projektu
+
+### 3.1 Zasady
+
+- Organizujemy kod **według funkcjonalności (feature-based)**, a nie według typu pliku.
+- Jeden plik = jedna odpowiedzialność. Plik powyżej ~300 linii to sygnał do podziału.
+- Kod współdzielony trafia do `shared/`, kod specyficzny dla funkcjonalności zostaje w jej folderze.
+- Warstwy się nie mieszają: logika biznesowa nie siedzi w komponentach UI ani w kontrolerach HTTP.
+- Zależności płyną w jedną stronę: `features` → `shared`, nigdy odwrotnie. Funkcjonalności nie importują się nawzajem bez wyraźnej potrzeby.
+
+### 3.2 Układ katalogów
+
+```
+src/
+├── app/                    # inicjalizacja aplikacji, routing, providery
+├── features/
+│   └── <feature-name>/
+│       ├── components/     # komponenty UI tej funkcjonalności
+│       ├── hooks/          # hooki specyficzne dla funkcjonalności
+│       ├── services/       # logika biznesowa, wywołania API
+│       ├── types/          # typy i interfejsy
+│       ├── utils/          # funkcje pomocnicze tylko dla tej funkcjonalności
+│       └── index.ts        # publiczne API modułu
+├── shared/
+│   ├── components/         # wspólne komponenty UI
+│   ├── hooks/              # wspólne hooki
+│   ├── utils/              # wspólne funkcje pomocnicze
+│   ├── types/              # wspólne typy
+│   └── constants/          # wspólne stałe
+├── config/                 # konfiguracja, zmienne środowiskowe
+└── main.ts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 3.3 Importy
 
-### Other setup steps
+- Każdy moduł udostępnia publiczne API przez `index.ts`. Importujemy z `index.ts`, nie z wnętrza modułu.
+- Używamy aliasów ścieżek (`@/features/...`) zamiast długich ścieżek względnych.
+- Kolejność importów (egzekwowana lintem):
+  1. Biblioteki zewnętrzne
+  2. Moduły z aliasów (`@/...`)
+  3. Importy względne (`./`, `../`)
+  4. Style i zasoby
+- Zakaz cyklicznych zależności między modułami.
+- Preferujemy **named exports** zamiast `export default` (łatwiejszy refactoring i wyszukiwanie).
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+### 3.4 Pliki testowe
 
-## Learn more
+Testy leżą obok testowanego kodu, z sufiksem `.test.ts`.
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 4. Zasady pisania kodu
 
-## Join the community
+- **Jedna funkcja = jedna rzecz.** Jeśli opisujesz ją słowem "i", rozbij ją.
+- Funkcje krótkie (orientacyjnie do ~30 linii), maksymalnie 3-4 parametry (więcej: przekaż obiekt).
+- **Early return** zamiast głębokich zagnieżdżeń `if`.
+- `const` domyślnie, `let` tylko gdy trzeba, `var` nigdy.
+- Preferujemy niemutowalność i czyste funkcje.
+- Zawsze `===` zamiast `==`.
+- Błędy obsługujemy jawnie. Nie połykamy wyjątków (pusty `catch` jest zabroniony).
+- DRY, ale bez przedwczesnej abstrakcji: trzy podobne miejsca to sygnał do wydzielenia wspólnego kodu, dwa jeszcze nie.
+- Zakaz `console.log` w kodzie produkcyjnym. Używamy loggera.
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 5. Narzędzia i automatyzacja
+
+Zasady są **egzekwowane automatycznie**, nie tylko opisane.
+
+| Narzędzie | Zadanie |
+|-----------|---------|
+| **TypeScript** (`strict: true`) | Kontrola typów |
+| **ESLint** (+ `typescript-eslint`) | Jakość kodu, konwencje nazewnictwa |
+| **Prettier** | Automatyczne formatowanie |
+| **EditorConfig** | Spójne ustawienia edytora |
+| **Husky + lint-staged** | Lint i format przed każdym commitem |
+| **CI (GitHub Actions)** | Lint, typecheck, testy i build przy każdym PR |
+
+Wymagane skrypty w `package.json`: `lint`, `lint:fix`, `format`, `typecheck`, `test`.
+
+---
+
+## 6. Git i code review
+
+### 6.1 Branche
+
+Format: `typ/krotki-opis`, gdzie typ to `feature`, `fix`, `refactor`, `docs`, `chore`.
+
+### 6.2 Commity (Conventional Commits)
+
+- Format: `typ: krótki opis w trybie rozkazującym`.
+- Dozwolone typy: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`.
+
+### 6.3 Pull requesty
+
+- Małe i skupione na jednej sprawie (orientacyjnie do ~400 linii zmian).
+- Opis: **co** zmieniono, **dlaczego**, jak przetestować.
+- Minimum **1 akceptacja** przed merge.
+- CI musi być zielone (lint, typecheck, testy).
+
+### 6.4 Checklista code review
+
+- [ ] Nazwy są czytelne i zgodne z konwencją
+- [ ] Funkcje są krótkie i robią jedną rzecz
+- [ ] Brak `any`, magic numbers i zakomentowanego kodu
+- [ ] Komentarze tłumaczą "dlaczego", nie "co"
+- [ ] Błędy są obsłużone
+- [ ] Są testy dla nowej logiki
+- [ ] Struktura folderów i importy są zgodne z zasadami
+
+### 6.5 Definition of Done
+
+- [ ] Kod zrecenzowany i zmergowany
+- [ ] Lint, typecheck i testy przechodzą
+- [ ] Dokumentacja zaktualizowana (jeśli dotyczy)
+- [ ] Kryteria akceptacji spełnione
+
+---
+
+## Zasada skauta
+
+> Zostaw kod czystszy, niż go zastałeś.
