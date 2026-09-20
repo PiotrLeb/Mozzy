@@ -147,30 +147,14 @@ Testy leżą obok testowanego kodu, z sufiksem `.test.ts`.
 
 ---
 
-## 5. Narzędzia i automatyzacja
 
-Zasady są **egzekwowane automatycznie**, nie tylko opisane.
+## 5. Git i code review
 
-| Narzędzie | Zadanie |
-|-----------|---------|
-| **TypeScript** (`strict: true`) | Kontrola typów |
-| **ESLint** (+ `typescript-eslint`) | Jakość kodu, konwencje nazewnictwa |
-| **Prettier** | Automatyczne formatowanie |
-| **EditorConfig** | Spójne ustawienia edytora |
-| **Husky + lint-staged** | Lint i format przed każdym commitem |
-| **CI (GitHub Actions)** | Lint, typecheck, testy i build przy każdym PR |
-
-Wymagane skrypty w `package.json`: `lint`, `lint:fix`, `format`, `typecheck`, `test`.
-
----
-
-## 6. Git i code review
-
-### 6.1 Branche
+### 5.1 Branche
 
 Format: `typ/krotki-opis`, gdzie typ to `feature`, `fix`, `refactor`, `docs`, `chore`.
 
-### 6.2 Commity (Conventional Commits)
+### 5.2 Commity (Conventional Commits)
 
 - Format: `typ: krótki opis w trybie rozkazującym`.
 - Dozwolone typy: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`.
