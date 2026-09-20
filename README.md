@@ -31,7 +31,7 @@ Mozzy is an app for personal trainers that brings session scheduling, client rec
 ### Installation
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/PiotrekBorek/Mozzy.git
 cd mozzy
 npm install
 ```
