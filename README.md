@@ -1,8 +1,4 @@
-# Standardy kodu (TypeScript)
-
-Zasady, które obowiązują w tym repozytorium. Cel: kod czytelny, spójny i łatwy w utrzymaniu przez każdą osobę z zespołu.
-
-> **Zasada nadrzędna:** kod czyta się znacznie częściej, niż się go pisze. Pisz tak, żeby zrozumiał go ktoś, kto nie zna kontekstu.
+# Standardy kodu
 
 ## Spis treści
 
@@ -17,15 +13,7 @@ Zasady, które obowiązują w tym repozytorium. Cel: kod czytelny, spójny i ła
 
 ## 1. Nazewnictwo
 
-### 1.1 Zasady ogólne
-
-- Nazwy piszemy **po angielsku**, konsekwentnie w całym projekcie.
-- Nazwa opisuje **co to jest** lub **co robi**, nie jak to działa.
-- Unikamy nieczytelnych skrótów. Dozwolone są powszechnie znane: `id`, `url`, `api`, `i` w prostej pętli.
-- Zakazane nazwy-wytrychy: `data`, `info`, `temp`, `stuff`, `handle`, `process`, `manager`, `helper`, `misc`.
-- Nazwa powinna być wymawialna i możliwa do wyszukania w kodzie.
-
-### 1.2 Konwencje wielkości liter
+### 1.1 Konwencje wielkości liter
 
 | Element | Konwencja |
 |---------|-----------|
@@ -43,7 +31,7 @@ Zasady, które obowiązują w tym repozytorium. Cel: kod czytelny, spójny i ła
 | Pliki komponentów React | `PascalCase` |
 | Foldery | `kebab-case` |
 
-### 1.3 Reguły szczegółowe
+### 1.2 Reguły szczegółowe
 
 - **Zmienne boolowskie** zaczynamy od `is`, `has`, `can`, `should`.
 - **Funkcje** to czasowniki opisujące akcję.
@@ -52,7 +40,7 @@ Zasady, które obowiązują w tym repozytorium. Cel: kod czytelny, spójny i ła
 - **Prefiksy i sufiksy** typu `I` w interfejsach czy `Type`/`Enum` w nazwach są zbędne.
 - **Handlery zdarzeń:** `handleXxx` dla funkcji obsługujących, `onXxx` dla propsów.
 
-### 1.4 Typy i `any`
+### 1.3 Typy i `any`
 
 - **Zakaz `any`.** Jeśli typ jest naprawdę nieznany, użyj `unknown` i zawęź go.
 - Tryb `strict` w `tsconfig.json` jest obowiązkowy.
@@ -186,33 +174,3 @@ Format: `typ/krotki-opis`, gdzie typ to `feature`, `fix`, `refactor`, `docs`, `c
 
 - Format: `typ: krótki opis w trybie rozkazującym`.
 - Dozwolone typy: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`.
-
-### 6.3 Pull requesty
-
-- Małe i skupione na jednej sprawie (orientacyjnie do ~400 linii zmian).
-- Opis: **co** zmieniono, **dlaczego**, jak przetestować.
-- Minimum **1 akceptacja** przed merge.
-- CI musi być zielone (lint, typecheck, testy).
-
-### 6.4 Checklista code review
-
-- [ ] Nazwy są czytelne i zgodne z konwencją
-- [ ] Funkcje są krótkie i robią jedną rzecz
-- [ ] Brak `any`, magic numbers i zakomentowanego kodu
-- [ ] Komentarze tłumaczą "dlaczego", nie "co"
-- [ ] Błędy są obsłużone
-- [ ] Są testy dla nowej logiki
-- [ ] Struktura folderów i importy są zgodne z zasadami
-
-### 6.5 Definition of Done
-
-- [ ] Kod zrecenzowany i zmergowany
-- [ ] Lint, typecheck i testy przechodzą
-- [ ] Dokumentacja zaktualizowana (jeśli dotyczy)
-- [ ] Kryteria akceptacji spełnione
-
----
-
-## Zasada skauta
-
-> Zostaw kod czystszy, niż go zastałeś.
